@@ -1,0 +1,23 @@
+name: winusb
+version: master
+summary: Create windows installer usb sticks
+description: WinUSB is a simple tool that enable you to create your own usb stick windows installer from an iso image or a real DVD.
+# confinement: strict
+confinement: devmode
+
+apps:
+  winusb:
+    command: bin/winusb
+    plugs: [home, optical-drive, mount-observe]
+
+parts:
+  winusb:
+    plugin: autotools
+    source: https://github.com/slacka/WinUSB.git
+    build-packages: [libwxbase3.0-dev, libwxgtk3.0-dev]
+    # stage-packages: [parted]
+
+  parted:
+    plugin: copy
+    files:
+      "src/parted": "/bin/parted"
